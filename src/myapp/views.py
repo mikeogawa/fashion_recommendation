@@ -38,8 +38,8 @@ def nn(request,number):
         i_list = i_list.split(",")
     mask = np.array([float(i) for i in i_list]) if i_list else np.ones((6,))
 
-
-    idx = maskMaxNodeChooser(model(state[None,...]),mask)
+    res = model(np.array([state for _ in range(6)]),np.arange(6)[...,None]).reshape(1,-1)
+    idx = maskMaxNodeChooser(res,mask)
     print(idx)
     idx = int(idx)
     return JsonResponse({"idx":"{}".format(idx),"image":"black","title":"Puma"})

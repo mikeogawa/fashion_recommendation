@@ -28,20 +28,35 @@ class MaskMaxNodeChooser(DiscreteNodeChooser):
         else:
             return max_list
 
+            
 class NN(rm.Model):
     def __init__(self):
         self.d1=rm.Dense(32)
         self.d2=rm.Dense(32)
-        self.d3=rm.Dense(6)
+        self.d3=rm.Dense(32)
+        self.d4=rm.Dense(1)
+
+        self.emb = rm.Embedding(32,6)
+        self.ad1 = rm.Dense(32)
         self.r=rm.Relu()
 
-    def forward(self,x):
+    def forward(self,x,action):
         h=self.d1(x)
-        h=self.r(h)
-        h=self.d2(h)
-        h=self.r(h)
+#         h=self.r(h)
+#         h=self.d2(h)
+#         h=self.r(h)
+
+        a = self.emb(action)
+        a = self.r(a)
+        a = self.ad1(a)
+        a = self.r(a)
+        h = rm.concat(h,a)
         h=self.d3(h)
+        h=self.r(h)
+        h=self.d4(h)
         return h
+
+
 
 model=NN()
 model.load("model.h5")

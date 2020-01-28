@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<String> cart=[];
   List<String> images=[];
-  List<num> userdata=[3,3,3];
+  List<num> userdata=[1,1,1];
   String recID="0";
   final cartData = shoppingData;
 
